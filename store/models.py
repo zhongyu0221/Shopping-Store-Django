@@ -21,6 +21,18 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+  # if no image uplaod, no image url
+    def imageURL(self):
+        try:
+            url = self.image.url
+        except:
+            url = ''
+        return url
+
+
+
+
+
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True,blank=True)# customer 1:n relationship. If the Customer is delete, we dont want to delete the order
