@@ -9,10 +9,28 @@ def store_view(request):
 
 
 def cart_view(request):
-    context = {}
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order,created = Order.objects.get_or_create(customer = customer,complete=False)# try:get expect: create&save
+        items = order.orderitem_set.all()# get all the order items with order as a parent
+    else:
+        items = []
+        order = {'get_cart_total':0,'get_cart_items':0}
+
+    context = {'items':items,'order':order}
     return render(request,'store/cart.html',context)
 
 
 def checkout_view(request):
-    context = {}
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)  # try:get expect: create&save
+        items = order.orderitem_set.all()  # get all the order items with order as a parent
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+
+
+
+    context = {'items':items,'order':order}
     return render(request,'store/checkout.html',context)
