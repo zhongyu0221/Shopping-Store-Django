@@ -1,10 +1,14 @@
 from django.shortcuts import render
 from .models import *
+from django.http import JsonResponse
 # Create your views here.
 
-def store_view(request):
+def store_view(request, *args, **kwargs):
     products = Product.objects.all()
     context = {'products': products}
+
+    checkuser=request.user
+    print('checkuser:',checkuser)
     return render(request,'store/store.html',context)
 
 
@@ -34,3 +38,7 @@ def checkout_view(request):
 
     context = {'items':items,'order':order}
     return render(request,'store/checkout.html',context)
+
+
+def updateitem_view(request):
+    return JsonResponse('Item was added', safe=False)
