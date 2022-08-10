@@ -1,3 +1,6 @@
+// browser caching JS. shift+f5 to refresh
+
+
 var user = document.getElementById("myVar").value;
 console.log('check user:',user)
 
@@ -10,14 +13,13 @@ for (var i = 0;i<updatedBtns.length; i++){//go through each btn
     updatedBtns[i].addEventListener('click',function (){
         var productId = this.dataset.product
         var action = this.dataset.action
-        console.log('productID:', productId,'Action:',action)// check in console
+        console.log('productId:', productId,'action:',action)// check in console
 
 
         console.log('USER:',user)
         if(user === 'AnonymousUser'){
            console.log('user is not loged in')
         }else{
-            console.log('user is authenticated, sending data...',user)
             updateUserOrder(productId,action)
         }
     })
@@ -26,10 +28,9 @@ for (var i = 0;i<updatedBtns.length; i++){//go through each btn
 
 function updateUserOrder(productId,action){
 
-    console.log('user is authenticated, sending data...')
+    console.log('user is authenticated, sending data...user name',user)
 
     var url = '/updateitem/' //where we wanna send data to
-
 
 //to post data, use fetch. Fetch API
     fetch(url,{
@@ -39,7 +40,7 @@ function updateUserOrder(productId,action){
             'X-CSRFToken': csrftoken//add csrf token in main html
         },
         //body is the part of data we wanna send. send as a string
-        body:JSON.stringify({'productID': productId,'Action:':action})
+        body:JSON.stringify({'productId': productId,'action':action})
 
         })
         //once the data is process, get response
@@ -48,7 +49,10 @@ function updateUserOrder(productId,action){
         })
 
         .then((data) =>{//return the real data
-        console.log('Data',data)
+        console.log('Return Data',data)
+            // the data here is form view.py json JsonResponse
+            location.reload()
+            // reload the page ？
     });
 
 }

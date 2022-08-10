@@ -13,7 +13,7 @@
     <script type="text/javascript" >
 
         //create CSRF token in JS, copy from django documentation
-        function getCookie(name) {
+        function getToken(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
         const cookies = document.cookie.split(';');
@@ -28,7 +28,7 @@
     }
     return cookieValue;
 }
-const csrftoken = getCookie('csrftoken');
+const csrftoken = getToken('csrftoken');
 
     </script>
     <input type="hidden" id="myVar" name="variable" value="{{ request.user }}">
