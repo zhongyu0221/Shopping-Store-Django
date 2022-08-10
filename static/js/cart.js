@@ -8,8 +8,6 @@ var updatedBtns = document.getElementsByClassName('update-cart')
 // get all the Update Cart btn
 
 for (var i = 0;i<updatedBtns.length; i++){//go through each btn
-
-
     updatedBtns[i].addEventListener('click',function (){
         var productId = this.dataset.product
         var action = this.dataset.action
@@ -24,6 +22,8 @@ for (var i = 0;i<updatedBtns.length; i++){//go through each btn
         }
     })
 }
+
+
 
 
 function updateUserOrder(productId,action){

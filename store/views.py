@@ -7,11 +7,21 @@ import json
 # Create your views here.
 
 def store_view(request, *args, **kwargs):
-    products = Product.objects.all()
-    context = {'products': products}
 
-    checkuser=request.user
-    print('checkuser:',checkuser)
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)  # try:get expect: create&save
+        items = order.orderitem_set.all()  # get all the order items with order as a parent
+        cartItems = order.get_cart_items
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping':False}
+        cartItems = order['get_cart_items']
+    print(cartItems)
+    products = Product.objects.all()
+    context = {'products': products,'cartItems': cartItems}
+
+
     return render(request,'store/store.html',context)
 
 
@@ -20,11 +30,13 @@ def cart_view(request):
         customer = request.user.customer
         order,created = Order.objects.get_or_create(customer = customer,complete=False)# try:get expect: create&save
         items = order.orderitem_set.all()# get all the order items with order as a parent
+        cartItems = order.get_cart_items
     else:
         items = []
-        order = {'get_cart_total':0,'get_cart_items':0}
+        order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping': False}
+        cartItems = order['get_cart_items']
 
-    context = {'items':items,'order':order}
+    context = {'items':items,'order':order, 'cartItems': cartItems}
     return render(request,'store/cart.html',context)
 
 
@@ -33,13 +45,17 @@ def checkout_view(request):
         customer = request.user.customer
         order, created = Order.objects.get_or_create(customer=customer, complete=False)  # try:get expect: create&save
         items = order.orderitem_set.all()  # get all the order items with order as a parent
+        cartItems = order.get_cart_items
     else:
         items = []
-        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping':False}
+        cartItems = order['get_cart_items']
+
+    # order.check_items_name
 
 
 
-    context = {'items':items,'order':order}
+    context = {'items':items,'order':order,'cartItems': cartItems}
     return render(request,'store/checkout.html',context)
 
 

@@ -68,4 +68,17 @@
 			</div>
 		</div>
 	</div>
+
+
+{#   to check is the order needs to be ship. If all digital, hide the shipping form#}
+    <script>
+    var shipping = '{{ order.shipping }}'
+    console.log('check shipping:',shipping)
+
+    if (shipping == 'False'){
+        document.getElementById('shipping-info').innerHTML = ''
+    }
+    </script>
+
+
 {% endblock content %}

@@ -57,6 +57,23 @@ class Order(models.Model):# summary of the cart
         total = sum([item.quantity for item in orderitems])
         return total
 
+    @property
+    def shipping(self): # check is the order need to be shipped
+        shipping = False
+        orderitems = self.orderitem_set.all()
+        for i in orderitems:
+            if i.product.digital == False:
+                shipping = True
+        print(shipping)
+        return shipping
+
+    @property
+    def check_items_name(self):  # get the total item number in the cart/order
+        orderitems = self.orderitem_set.all()
+        for item in orderitems:
+            print(item.product)
+            print(item.product.digital)
+
 
 
 
