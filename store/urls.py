@@ -23,7 +23,7 @@ urlpatterns = [
     path('checkout/', checkout_view, name = 'checkout'),
     path('store/', store_view, name = 'store'),
 
-    path('update_item/', updateitem_view, name = 'updateitem'),
+    path('updateitem/', updateitem_view, name = 'updateitem'),
 
 
 ]
