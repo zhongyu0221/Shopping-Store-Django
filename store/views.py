@@ -33,21 +33,12 @@ def cart_view(request):
         items = order.orderitem_set.all()# get all the order items with order as a parent
         cartItems = order.get_cart_items
     else:
-        # items = []
-        # order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping': False}
-        # cartItems = order['get_cart_items']
+        cookieData = cookieCart(request)
+        cartItems = cookieData['cartItems']
+        order =cookieData['order']
+        items = cookieData['items']
 
-
-
-
-
-
-
-
-
-
-
-
+    products = Product.objects.all()
     context = {'items':items,'order':order, 'cartItems': cartItems}
     return render(request,'store/cart.html',context)
 
