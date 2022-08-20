@@ -56,3 +56,23 @@ function updateUserOrder(productId,action){
     });
 
 }
+
+function getCookie(name){
+    var cookieArr = document.cookie.split(';');
+    //split cookie string adn get all individual name = value  pairs
+
+    //loop through the array elements
+    for (var = i=0;i<cookieArr.length;i++){
+        var cookiePair = cookieArr[i].split('=');
+
+        //remove whitespace at the begining of the cookie name and compare with given string
+        if(name == cookiePair[0].trim()){
+            return decodeURIComponent(cookiePair[1]);
+        }
+
+
+        return null; //if not found
+    )
+
+
+}

@@ -37,6 +37,7 @@ def cart_view(request):
         cartItems = cookieData['cartItems']
         order =cookieData['order']
         items = cookieData['items']
+        print(f'cookieData:{cookieData}')
 
     products = Product.objects.all()
     context = {'items':items,'order':order, 'cartItems': cartItems}
@@ -50,9 +51,10 @@ def checkout_view(request):
         items = order.orderitem_set.all()  # get all the order items with order as a parent
         cartItems = order.get_cart_items
     else:
-        items = []
-        order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping':False}
-        cartItems = order['get_cart_items']
+        cookieData = cookieCart(request)
+        cartItems = cookieData['cartItems']
+        order = cookieData['order']
+        items = cookieData['items']
 
     # order.check_items_name
 
